@@ -5,7 +5,7 @@ enum AppConfiguration {
     private static let fallbackBaseURLString = "https://playday.christianriehl1.workers.dev"
 
     // Ko-fi page URL — replace YOUR_KOFI_ID with your actual Ko-fi username
-    static let kofiURL = URL(string: "https://ko-fi.com/YOUR_KOFI_ID")!
+    static let kofiURL = URL(string: "https://ko-fi.com/emivo")!
 
     // Sent as a request header so the web app can detect the iOS client
     static let clientHeader = ("X-Playday-Client", "ios")
