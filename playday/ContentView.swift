@@ -1,6 +1,7 @@
 import SwiftUI
 import UIKit
 import WebKit
+import SafariServices
 
 struct ContentView: View {
     let incomingURL: URL?
@@ -11,6 +12,7 @@ struct ContentView: View {
     @State private var reloadTrigger = 0
     @State private var currentURL = AppConfiguration.baseURL
     @State private var lastError: ErrorState?
+    @State private var showSupportSheet = false
 
     init(incomingURL: URL? = nil) {
         self.incomingURL = incomingURL
@@ -41,8 +43,13 @@ struct ContentView: View {
                     if let lastError {
                         errorOverlay(lastError)
                     }
+
+                    supportButton
                 }
                 .ignoresSafeArea(.all)
+                .sheet(isPresented: $showSupportSheet) {
+                    SupportSheet()
+                }
                 .safeAreaInset(edge: .top) {
                     VStack(spacing: 10) {
                         if !networkMonitor.isConnected {
@@ -137,6 +144,28 @@ struct ContentView: View {
         .accessibilityElement(children: .contain)
     }
 
+    private var supportButton: some View {
+        VStack {
+            Spacer()
+            HStack {
+                Spacer()
+                Button {
+                    showSupportSheet = true
+                } label: {
+                    Image(systemName: "cup.and.saucer.fill")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundStyle(.white)
+                        .frame(width: 44, height: 44)
+                        .background(Color.orange, in: Circle())
+                        .shadow(color: .black.opacity(0.18), radius: 8, y: 3)
+                }
+                .accessibilityLabel("App unterstützen")
+                .padding(.trailing, 20)
+                .padding(.bottom, 28)
+            }
+        }
+    }
+
     private var configurationErrorView: some View {
         VStack(spacing: 14) {
             Image(systemName: "exclamationmark.triangle.fill")
@@ -182,6 +211,8 @@ struct ContentView: View {
         var request = URLRequest(url: url)
         request.timeoutInterval = 30
         request.cachePolicy = .reloadRevalidatingCacheData
+        let (headerField, headerValue) = AppConfiguration.clientHeader
+        request.setValue(headerValue, forHTTPHeaderField: headerField)
         return request
     }
 

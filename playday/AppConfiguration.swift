@@ -4,6 +4,12 @@ enum AppConfiguration {
     private static let baseURLKey = "PLAYDAY_BASE_URL"
     private static let fallbackBaseURLString = "https://playday.christianriehl1.workers.dev"
 
+    // Ko-fi page URL — replace YOUR_KOFI_ID with your actual Ko-fi username
+    static let kofiURL = URL(string: "https://ko-fi.com/YOUR_KOFI_ID")!
+
+    // Sent as a request header so the web app can detect the iOS client
+    static let clientHeader = ("X-Playday-Client", "ios")
+
     static var baseURL: URL? {
         let configuredValue = Bundle.main.object(forInfoDictionaryKey: baseURLKey) as? String
         let candidate = configuredValue?.trimmingCharacters(in: .whitespacesAndNewlines)
