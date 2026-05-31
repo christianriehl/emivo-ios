@@ -50,7 +50,7 @@ Emivo ist kostenlos und werbefrei. Wenn dir die App gefällt, kannst du die Entw
 *(leer lassen bis du eine eigene Website hast)*
 
 ## Datenschutz-URL
-*(muss vor Einreichung vorhanden sein — z.B. einfache Seite auf deiner Domain)*
+`https://emivo.app/datenschutz`
 
 ---
 
